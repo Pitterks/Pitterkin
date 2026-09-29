@@ -24,3 +24,13 @@
 ## Known limits (next up)
 - Polygon only for now. Tron/BSC can be added as more chains behind the same scanner.
 - Reservation is 30 min; a later payment still succeeds if the account is still free, else goes to manual refund.
+
+## Card on-ramps (researched Sep 2026)
+- **Transak:** production API key requires KYB (company verification); staging key is instant.
+  Widget URLs are created server-side (`POST /api/v2/auth/session`, IP-whitelisted, single-use, 5 min TTL).
+- **Ramp Network:** partner terms exclude restricted industries and require a business integrator.
+- **MoonPay:** moved to headless/partner API for businesses.
+- Conclusion: an embedded "Pay by card" button needs a legal entity. Until then the pay page shows a guide
+  (buy USDC/USDT on an exchange with a card, send to the order address). Revisit when an entity exists;
+  the on-ramp would just send to the same per-order address, so no changes to the scanner are needed.
+- Docs sites were unreachable from the build sandbox, so re-verify parameters against staging before coding.

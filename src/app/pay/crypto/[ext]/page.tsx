@@ -53,6 +53,17 @@ export default async function CryptoPay({ params, searchParams }: { params: Prom
             </ul>
           </>
         )}
+        {!done && (
+          <details className="rounded-lg border p-3 text-sm" style={{ borderColor: "var(--line)" }}>
+            <summary className="cursor-pointer font-medium">No crypto yet? Pay with a card</summary>
+            <ol className="muted mt-2 list-decimal space-y-1 pl-5 text-xs">
+              <li>Buy USDC or USDT with your card on any exchange or wallet app you trust (Coinbase, Binance, Kraken, MoonPay, etc.).</li>
+              <li>Withdraw / send it to the address above and select the <b>{cfg.chainName}</b> network.</li>
+              <li>Send the amount shown (exchange withdrawal fees are paid on top). This page updates automatically.</li>
+            </ol>
+            <p className="muted mt-2 text-xs">Card purchases and their fees are handled by the service you choose, not by us.</p>
+          </details>
+        )}
         <Link className="btn block text-center" href={`/order/${row.orderId}?token=${token}`}>{done ? "View your account" : "Go to order page"}</Link>
       </div>
     </div>
