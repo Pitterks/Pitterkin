@@ -1,0 +1,63 @@
+<!doctype html><meta charset="utf-8"><title>Home</title>
+<link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="base.css">
+<style>
+.feat{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.ft{position:relative;height:292px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.ft>svg{position:absolute;inset:0;width:100%;height:100%}
+.ft:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,15,20,0) 25%,rgba(14,15,20,.92) 78%)}
+.ft .in{position:absolute;left:16px;right:16px;bottom:16px;z-index:1}
+.ft .in small{display:flex;align-items:center;gap:6px;color:var(--mut);font-size:12px;font-weight:500;margin-bottom:6px}
+.ft .in h4{font:650 18px/1.25 Onest;letter-spacing:-.01em}
+.ft .in .p{margin-top:8px;font:700 22px Onest}
+.ft .tl{position:absolute;left:12px;top:12px;z-index:1;display:flex;gap:6px}
+.games{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.game{position:relative;height:214px;border-radius:var(--r);overflow:hidden;padding:16px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--line)}
+.game:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(115deg,rgba(255,255,255,.05) 0 2px,transparent 2px 16px)}
+.game .n{position:relative;font:700 40px/.92 "Barlow Condensed";text-transform:uppercase;letter-spacing:.01em}
+.game .m{position:relative;margin-top:10px;display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:600}
+.game.soon{filter:saturate(.35) brightness(.8)}
+.pop{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pop .card{padding:20px}.pop h4{font:650 16px Onest;margin-bottom:12px}
+.pop a{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-weight:500}
+.pop a:first-of-type{border-top:0}.pop a em{margin-left:auto;font-style:normal;color:var(--faint);font-size:12px}
+.pop a span.ico{display:grid;place-items:center;width:30px;height:30px;border-radius:8px;background:var(--s2);color:var(--acc)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.step{padding:22px;position:relative}.step .n{font:700 13px Onest;color:var(--acc);letter-spacing:.06em}
+.step h4{font:650 17px Onest;margin:10px 0 6px}.step p{color:var(--mut);font-size:13.5px}
+.step .ic{position:absolute;right:18px;top:18px;color:var(--s3)}
+.tint{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.tc{border-radius:var(--r);padding:26px 26px 24px;color:#15171F;min-height:210px;display:flex;flex-direction:column}
+.tc h4{font:700 21px/1.2 Onest;letter-spacing:-.02em}.tc p{margin-top:8px;font-size:14px;opacity:.78;max-width:330px}
+.tc .btn{margin-top:auto;align-self:flex-start;background:#15171F;color:#fff;height:38px}
+.tc .big{font:700 46px/1 Onest;letter-spacing:-.04em;margin-bottom:14px}
+.faq{display:grid;grid-template-columns:1fr 1.5fr;gap:40px}
+.q{border-top:1px solid var(--line);padding:16px 0}.q h5{display:flex;justify-content:space-between;align-items:center;font:600 15px Onest}.q p{margin-top:8px;color:var(--mut);max-width:620px}
+</style>
+<script src="icons.js"></script><script src="art.js"></script><script src="data.js"></script><script src="chrome.js"></script>
+<body>
+<div id="hd"></div>
+<div class="wrap">
+  <div class="sec"><div class="sechd"><h2 class="h2">Featured right now</h2><a class="link" href="#">All Fortnite accounts <span id="a1"></span></a></div><div class="feat" id="feat"></div></div>
+  <div class="sec"><div class="sechd"><h2 class="h2">Browse by game</h2></div><div class="games" id="games"></div></div>
+  <div class="sec"><div class="sechd"><h2 class="h2">Fresh listings</h2><a class="link" href="#">View all <span id="a2"></span></a></div><div class="feat" id="fresh"></div></div>
+  <div class="sec"><div class="sechd"><h2 class="h2">Shop by</h2></div><div class="pop" id="pop"></div></div>
+  <div class="sec"><div class="sechd"><h2 class="h2">How buying works</h2></div><div class="steps" id="steps"></div></div>
+  <div class="sec"><div class="tint" id="tint"></div></div>
+  <div class="sec"><div class="faq"><div><h2 class="h2">Questions before you buy</h2><p class="mut" style="margin-top:10px;max-width:320px">Can't find your answer? Support replies 24/7 by chat.</p><a class="btn ghost" style="margin-top:18px" href="#">Contact support</a></div><div id="faq"></div></div></div>
+</div>
+<div id="ft"></div>
+<script>
+$("#hd").innerHTML=header(); $("#ft").innerHTML=footer(); $("#a1").innerHTML=ic("arrow-right",14); $("#a2").innerHTML=ic("arrow-right",14);
+$("#feat").innerHTML=[LIST[2],LIST[0],LIST[6],LIST[4]].map(d=>`<a class="ft" href="#">${locker(d.seed+100,d.mix,{cols:5,rows:5,w:400,h:400})}<div class="tl"><span class="tagp">${d.plat}</span>${d.og?'<span class="tagp acc">OG</span>':''}</div><div class="in"><small>${ic("gem",13)} ${d.skins} skins · ${d.stock<3?"only "+d.stock+" left":d.stock+" in stock"}</small><h4>${d.t}</h4><div class="p">${usd(d.price)}</div></div></a>`).join("");
+const G=[["Fortnite","linear-gradient(160deg,#3b6cff,#7a3cff 60%,#2a1a6e)",true,"8 listings"],["Valorant","linear-gradient(160deg,#ff4a5c,#9c1c3a 70%,#2a0f1a)",false],["Roblox","linear-gradient(160deg,#5b6b86,#2c3548 70%,#141922)",false],["Rocket League","linear-gradient(160deg,#2aa8ff,#1a4d9c 70%,#0d1a3a)",false],["Apex Legends","linear-gradient(160deg,#d9412b,#7a1f14 70%,#25110d)",false],["Counter Strike","linear-gradient(160deg,#f0a030,#8a5a12 70%,#2a1c08)",false]];
+$("#games").innerHTML=G.map(([n,bg,on,m])=>`<a class="game ${on?"":"soon"}" href="#" style="background:${bg}"><div class="n">${n.replace(" ","<br>")}</div><div class="m"><span>${on?m:"Coming soon"}</span>${on?`<span class="tagp acc">Open</span>`:""}</div></a>`).join("");
+$("#fresh").innerHTML=[LIST[1],LIST[3],LIST[5],LIST[7]].map(card).join("");
+const P=[["Platform","monitor",[["PC","3"],["PlayStation","1"],["Xbox","1"],["Nintendo Switch","1"],["Mobile","1"]]],["Collection","gem",[["OG / early seasons","2"],["100+ skins","4"],["Has legendary items","7"],["Rare emotes","3"],["Full access","8"]]],["Budget","tag",[["Under $25","2"],["$25 – $100","4"],["$100 – $300","2"],["$300+","1"],["Best value","→"]]]];
+$("#pop").innerHTML=P.map(([h,i,l])=>`<div class="card"><h4>${h}</h4>${l.map(([t,c])=>`<a href="#"><span class="ico">${ic(i,16)}</span>${t}<em>${c}</em></a>`).join("")}</div>`).join("");
+const S=[["01","Pick an account","Filter by skins, platform and price. Every listing shows exactly what's inside.","search"],["02","Pay with crypto","Send USDC or USDT to a unique address. No account needed, no card details.","wallet"],["03","Get it instantly","Login details appear on your private order page as soon as the payment confirms.","zap"],["04","Warranty starts","Something wrong in the first 7 days? Open a claim and we replace the account.","shield-check"]];
+$("#steps").innerHTML=S.map(([n,h,p,i])=>`<div class="card step"><div class="n">${n}</div><span class="ic">${ic(i,28,1.4)}</span><h4>${h}</h4><p>${p}</p></div>`).join("");
+$("#tint").innerHTML=`<div class="tc" style="background:#F1E1C8"><div class="big">7 days</div><h4>Replacement warranty</h4><p>If an account stops working, we swap it for a new one. Otherwise, refund.</p><a class="btn" href="#">How the warranty works</a></div>
+<div class="tc" style="background:#CDE5D6"><div class="big">USDC · USDT</div><h4>Crypto checkout</h4><p>A unique deposit address per order. Confirmations are tracked automatically.</p><a class="btn" href="#">Paying with crypto</a></div>
+<div class="tc" style="background:#CFE0F2"><div class="big">24/7</div><h4>Human support</h4><p>A real person answers, any hour. Your order link is your proof of purchase.</p><a class="btn" href="#">Open live chat</a></div>`;
+$("#faq").innerHTML=[["Is it safe to buy a Fortnite account here?","Every account is checked before listing and covered by a 7-day replacement warranty. Payments are held to a unique address per order, so nothing is mixed up."],["Can I change the email on the account?","Listings marked Full access include the original email so you can secure the account yourself. The listing page shows exactly what is included."],["How fast is delivery?","Instant. Once the network confirms your payment (usually 1–2 minutes), the login details appear on your order page."],["What if the account has a problem?","Open a warranty claim from your order page. We review it and either replace the account or refund you."]].map(([q,a],i)=>`<div class="q"><h5>${q}<span class="mut">${ic(i?"plus":"minus",18)}</span></h5>${i==0?`<p>${a}</p>`:""}</div>`).join("");
+</script>

@@ -1,0 +1,34 @@
+<!doctype html><meta charset="utf-8"><title>Product</title>
+<link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="base.css">
+<script src="icons.js"></script><script src="art.js"></script><script src="data.js"></script><script src="chrome.js"></script>
+<body><div id="hd"></div>
+<div class="wrap">
+  <div class="crumb">Home <span>›</span> <b>Fortnite</b> <span>›</span> <b>Accounts</b> <span>›</span> <b>OG account</b></div>
+  <div class="pgrid"><div>
+    <div class="gal"><div class="main" id="main"></div><div class="thumbs" id="thumbs"></div></div>
+    <div class="tabs"><a class="on">Details</a><a>Warranty</a><a>How to pay</a><a>FAQ</a></div>
+    <div class="kv" id="kv"></div>
+    <div class="card rar" id="rar"></div>
+  </div>
+  <div class="card buy" id="buy"></div></div>
+  <div class="sec"><div class="sechd"><h2 class="h2">Similar accounts</h2><a class="link" href="#">View all <span id="a"></span></a></div><div class="grid4" style="margin-top:0" id="sim"></div></div>
+</div><div id="ft"></div>
+<script>
+$("#hd").innerHTML=header(); $("#ft").innerHTML=footer(); $("#a").innerHTML=ic("arrow-right",14);
+const d=LIST[0];
+$("#main").innerHTML=locker(d.seed,d.mix,{cols:10,rows:6,w:800,h:500})+`<div class="tl"><span class="tagp">${d.plat}</span><span class="tagp acc">OG</span><span class="tagp">${ic("badge-check",12)} Verified by Pitterkin</span></div>`;
+$("#thumbs").innerHTML=[["Outfits",1],["Emotes"],["Pickaxes"],["Gliders"]].map(([n,on],i)=>`<div class="${on?"on":""}">${locker(d.seed+i*7,d.mix,{cols:6,rows:4,w:400,h:250})}<span class="tagp">${n}</span></div>`).join("");
+$("#kv").innerHTML=[["Platform","PC"],["Outfits (skins)",d.skins],["V-Bucks balance",d.vb.toLocaleString("en-US")],["Access","Full · original email included"],["Registered","2018"],["Email changeable","Yes"],["Linked platforms","PC, Mobile"],["Delivery","Instant after payment"]].map(([k,v])=>`<div><span>${k}</span><b>${v}</b></div>`).join("");
+const t=d.mix.reduce((a,b)=>a+b,0);
+$("#rar").innerHTML=`<h4>Collection rarity · ${t} items</h4>${rarBar(d.mix)}<div class="lg">${d.mix.map((v,i)=>`<div><i style="background:${RAR[i]}"></i>${RARN[i]}<b>${v}</b></div>`).join("")}</div>`;
+$("#buy").innerHTML=`<h1>${d.t}</h1><div class="p num">${usd(d.price)}</div><div class="st warn">${ic("flame",15)} Only ${d.stock} left</div>
+<div class="mut" style="font-size:12.5px;font-weight:500">Pay with</div>
+<div class="pm"><div class="on"><i></i>USDC</div><div><i></i>USDT</div></div>
+<a class="btn lg" style="width:100%" href="#">Buy now ${ic("arrow-right",18)}</a>
+<a class="btn ghost lg" style="width:100%;margin-top:10px" href="#">${ic("shopping-cart",17)} Add to cart</a>
+<div class="tr"><div>${ic("zap",18)}<p><b>Instant delivery</b><span>Login details appear on your order page once the payment confirms.</span></p></div>
+<div>${ic("shield-check",18)}<p><b>7-day replacement warranty</b><span>Problem with the account? We replace it or refund you.</span></p></div>
+<div>${ic("lock",18)}<p><b>Private order link</b><span>No account needed. Your link is your proof of purchase.</span></p></div></div>
+<div class="note">${ic("info",16)}<span>Crypto only. You'll get a unique address and exact amount at checkout.</span></div>`;
+$("#sim").innerHTML=[LIST[6],LIST[4],LIST[3],LIST[7]].map(card).join("");
+</script>

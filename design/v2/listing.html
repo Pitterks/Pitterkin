@@ -1,0 +1,28 @@
+<!doctype html><meta charset="utf-8"><title>Listing</title>
+<link rel="stylesheet" href="fonts.css"><link rel="stylesheet" href="base.css">
+<script src="icons.js"></script><script src="art.js"></script><script src="data.js"></script><script src="chrome.js"></script>
+<body><div id="hd"></div>
+<div class="wrap">
+  <div class="crumb">Home <span>›</span> <b>Fortnite</b> <span>›</span> <b>Accounts</b></div>
+  <div class="thd"><div><h1>Fortnite accounts</h1><div class="c">12 accounts · all with full access and a 7-day warranty</div></div>
+    <div class="row gap12"><div class="dd"><span id="sortic"></span>Sort: <b>Recommended</b> <span id="d0"></span></div></div></div>
+  <div class="fbar" id="fbar"></div>
+  <div class="qrow" id="qrow"></div>
+  <div class="grid4" id="grid"></div>
+  <div class="pager"><span id="pl"></span><span class="on">1</span><span>2</span><span>3</span><span id="pr"></span></div>
+  <div class="seo"><div><h2>Buy Fortnite accounts</h2>
+    <p>Every listing shows exactly what is inside: number of skins, platform, V-Bucks balance and the rarity breakdown of the collection. Accounts marked Full access include the original email so you can secure the account yourself.</p>
+    <p>Pay with USDC or USDT to a unique address created for your order. When the network confirms the payment, your login details appear on your private order page.</p>
+    <p>Every account is covered by a 7-day replacement warranty. Not affiliated with or endorsed by Epic Games.</p></div>
+    <div id="faq"></div></div>
+</div><div id="ft"></div>
+<script>
+$("#hd").innerHTML=header(); $("#ft").innerHTML=footer();
+$("#sortic").innerHTML=ic("arrow-up-down",15); $("#d0").innerHTML=ic("chevron-down",15); $("#pl").innerHTML=ic("chevron-left",16); $("#pr").innerHTML=ic("chevron-right",16);
+const dd=(l,v,on)=>`<div class="dd ${on?"on":""}">${l}${v?` <small>${v}</small>`:""} ${ic("chevron-down",15)}</div>`;
+$("#fbar").innerHTML=dd("Platform","")+dd("Skins","50+",1)+dd("V-Bucks","")+dd("Price","$0 – $600")+dd("Rarity","")+dd("Access","Full")+`<div class="dd">${ic("sliders-horizontal",15)} More filters</div><a class="link" style="margin-left:6px">Clear all</a>`;
+$("#qrow").innerHTML=[["All","12",1],["OG accounts","4"],["100+ skins","6"],["Has legendary","9"],["Under $50","5"],["PC","6"],["PlayStation","3"],["Xbox","2"],["Mobile","1"]].map(([t,c,on])=>`<span class="chip ${on?"on":""}">${t} <em>${c}</em></span>`).join("");
+const more=[{...LIST[6],id:9,seed:91,t:"Rare emote collector · 75 skins · PC",skins:75,price:59,stock:3},{...LIST[1],id:10,seed:92,t:"Starter+ · 40 skins · Xbox",skins:40,plat:"Xbox",price:25,stock:4},{...LIST[4],id:11,seed:93,t:"OG · 210 skins · early seasons",skins:210,price:329,og:true,stock:1},{...LIST[5],id:12,seed:94,t:"Mobile bundle · 55 skins",skins:55,price:34,stock:5}];
+$("#grid").innerHTML=[...LIST,...more].map(card).join("");
+$("#faq").innerHTML=[["Can I change the email?",1],["How fast is delivery?"],["What does the warranty cover?"],["Which network do I pay on?"]].map(([q,o])=>`<div class="q"><h5>${q}<span class="mut">${ic(o?"minus":"plus",18)}</span></h5>${o?`<p class="mut" style="margin-top:8px;font-size:13.5px">Full access listings include the original email. Details are shown on each listing page.</p>`:""}</div>`).join("");
+</script>
