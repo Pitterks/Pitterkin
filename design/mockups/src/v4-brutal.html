@@ -1,0 +1,28 @@
+<!doctype html><meta charset="utf-8"><title>Raw</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+:root{--paper:#F5F5F0;--ink:#0A0A0A;--or:#FF5A1F;--bl:#2D6BFF}
+*{box-sizing:border-box;margin:0}body{background:var(--paper);color:var(--ink);font:16px/1.4 "Bricolage Grotesque",sans-serif;width:1440px}
+.mar{background:var(--or);border-bottom:3px solid var(--ink);overflow:hidden;white-space:nowrap;font:700 14px "JetBrains Mono";padding:8px 0;text-transform:uppercase;letter-spacing:.06em}
+header{display:flex;align-items:center;gap:30px;padding:16px 36px;border-bottom:3px solid var(--ink)}
+.logo{font:800 34px "Bricolage Grotesque";letter-spacing:-.04em}nav{margin-left:auto;display:flex;gap:14px}nav span{border:3px solid var(--ink);padding:6px 14px;font-weight:600;background:#fff}nav .on{background:var(--ink);color:#fff}
+.hero{padding:36px;border-bottom:3px solid var(--ink);display:grid;grid-template-columns:1.5fr 1fr;gap:40px;align-items:center}
+.hero h1{font:800 62px/1.08 "Bricolage Grotesque";letter-spacing:-.045em}.hero h1 u{text-decoration:none;background:var(--or);padding:0 8px;box-decoration-break:clone}
+.rules{border:3px solid var(--ink);background:#fff;box-shadow:8px 8px 0 var(--ink);padding:18px 20px;font:14px/1.7 "JetBrains Mono"}.rules b{background:var(--bl);color:#fff;padding:0 4px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;padding:36px}
+.card{border:3px solid var(--ink);background:#fff;box-shadow:8px 8px 0 var(--ink)}
+.img{height:150px;border-bottom:3px solid var(--ink);background:repeating-linear-gradient(45deg,#fff 0 10px,#EDEDE6 10px 20px);display:flex;justify-content:space-between;padding:10px;font:700 12px "JetBrains Mono";text-transform:uppercase}
+.b{padding:14px 16px}.b h3{font:800 22px/1.1 "Bricolage Grotesque";letter-spacing:-.02em;min-height:48px}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:2px 14px;margin:12px 0;font:14px "JetBrains Mono"}.kv span{color:#666}.kv b{text-align:right}
+.row{display:flex;justify-content:space-between;align-items:center;border-top:3px solid var(--ink);margin:0 -16px;padding:12px 16px 0}
+.price{font:800 36px "Bricolage Grotesque";letter-spacing:-.03em}.buy{background:var(--ink);color:#fff;font:700 13px "JetBrains Mono";padding:10px 14px;text-transform:uppercase}
+.st{display:inline-block;background:var(--or);border:2px solid var(--ink);font:700 11px "JetBrains Mono";padding:1px 6px;text-transform:uppercase}
+.foot{padding:0 36px 24px;font:12px "JetBrains Mono";color:#555}
+</style>
+<div class="mar">no hidden fees ✱ replacement if it breaks ✱ crypto checkout ✱ order link = your receipt ✱ no hidden fees ✱ replacement if it breaks ✱ crypto checkout ✱ order link = your receipt ✱</div>
+<header><div class="logo">pitterkin</div><nav><span class="on">Fortnite</span><span>Valorant</span><span>Rules</span><span>Cart 0</span></nav></header>
+<div class="hero"><h1>Buy the account. <u>Keep it.</u> Or we replace it.</h1><div class="rules"><b>1.</b> Pick an account.<br><b>2.</b> Pay in USDC/USDT.<br><b>3.</b> Get the login by private link.<br><b>4.</b> Problem in 7 days? We swap it.<br><b>5.</b> No swap possible? Refund.</div></div>
+<div class="grid" id="g"></div><div class="foot">Mockup with sample data · image areas are placeholders · not affiliated with Epic Games</div>
+<script src="data.js"></script><script>
+$("#g").innerHTML=DATA.map(d=>`<div class="card"><div class="img"><span>${d.plat}</span><span>${d.og?"OG":""}</span></div><div class="b"><h3>${d.t}</h3><div class="kv"><span>skins</span><b>${d.skins}</b><span>v-bucks</span><b>${d.vb}</b><span>warranty</span><b>7 days</b></div><div class="row"><div class="price">${usd(d.price)}</div><div style="text-align:right"><div class="st">${d.stock} left</div><div class="buy" style="margin-top:6px">Buy →</div></div></div></div></div>`).join("");
+</script>

@@ -1,0 +1,48 @@
+<!doctype html><meta charset="utf-8"><title>Terminal</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+:root{--bg:#0F1012;--panel:#181B1E;--line:#2A2F33;--fg:#E6E8E3;--mut:#8A9096;--amb:#F2A20C;--grn:#3FB27F}
+*{box-sizing:border-box;margin:0}body{background:var(--bg);color:var(--fg);font:14px/1.4 "IBM Plex Sans",sans-serif;width:1440px}
+.mono{font-family:"IBM Plex Mono",monospace}
+.tick{display:flex;gap:28px;padding:7px 24px;border-bottom:1px solid var(--line);font:12px "IBM Plex Mono";color:var(--mut)}.tick b{color:var(--fg);font-weight:500}.tick i{color:var(--grn);font-style:normal}
+header{display:flex;align-items:center;gap:32px;padding:14px 24px;border-bottom:1px solid var(--line)}
+.logo{font:600 18px "IBM Plex Mono";letter-spacing:.02em}.logo span{color:var(--amb)}
+.search{flex:1;max-width:520px;background:var(--panel);border:1px solid var(--line);padding:9px 12px;color:var(--mut);font:13px "IBM Plex Mono"}
+nav{display:flex;gap:22px;color:var(--mut);margin-left:auto}nav b{color:var(--fg);font-weight:500;border-bottom:2px solid var(--amb);padding-bottom:3px}
+.wrap{display:grid;grid-template-columns:240px 1fr;gap:0}
+aside{border-right:1px solid var(--line);padding:20px 24px;min-height:760px}
+aside h4{font:500 11px "IBM Plex Mono";text-transform:uppercase;letter-spacing:.1em;color:var(--mut);margin:0 0 10px}
+.f{margin-bottom:22px}.row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed var(--line)}.row span:last-child{color:var(--mut);font-family:"IBM Plex Mono"}
+.chk{display:inline-block;width:11px;height:11px;border:1px solid var(--mut);margin-right:8px;vertical-align:-1px}.chk.on{background:var(--amb);border-color:var(--amb)}
+main{padding:20px 24px}
+.head{display:flex;justify-content:space-between;align-items:end;margin-bottom:14px}h1{font:600 20px "IBM Plex Sans"}.sub{color:var(--mut);font-size:13px}
+table{width:100%;border-collapse:collapse}th{font:500 11px "IBM Plex Mono";text-transform:uppercase;letter-spacing:.08em;color:var(--mut);text-align:left;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:14px 10px;border-bottom:1px solid var(--line);vertical-align:middle}tr:hover td{background:var(--panel)}
+.num{font-family:"IBM Plex Mono";text-align:right}.ttl{font-weight:500}.tag{display:inline-block;font:11px "IBM Plex Mono";border:1px solid var(--line);padding:1px 6px;color:var(--mut);margin-right:6px}.tag.og{color:var(--amb);border-color:var(--amb)}
+.bar{display:flex;height:8px;width:150px;gap:1px}.bar i{display:block;height:100%}
+.price{font:600 17px "IBM Plex Mono";color:var(--fg)}.st{font:12px "IBM Plex Mono";color:var(--grn)}.st.low{color:var(--amb)}
+.btn{background:var(--amb);color:#111;font:600 12px "IBM Plex Mono";padding:8px 14px;text-transform:uppercase;letter-spacing:.06em}
+.trust{display:flex;gap:32px;margin-top:22px;padding:14px 16px;background:var(--panel);border:1px solid var(--line);font-size:13px;color:var(--mut)}.trust b{color:var(--fg);font-weight:500}
+.foot{padding:16px 24px;color:#5d6368;font:11px "IBM Plex Mono"}
+</style>
+<div class="tick"><span>WARRANTY <b>7d replacement</b></span><span>CHECKOUT <b>USDC / USDT</b></span><span>DELIVERY <b>instant</b></span><span>LISTINGS <b id="n"></b></span><span style="margin-left:auto">SAMPLE DATA</span></div>
+<header><div class="logo">PITTERKIN<span>_</span></div><div class="search">Search accounts, skins, platform…</div><nav><b>Fortnite</b><span>Valorant</span><span>Warranty</span><span>Cart (0)</span></nav></header>
+<div class="wrap"><aside>
+<div class="f"><h4>Platform</h4><div class="row"><span><i class="chk on"></i>PC</span><span>3</span></div><div class="row"><span><i class="chk"></i>PlayStation</span><span>1</span></div><div class="row"><span><i class="chk"></i>Xbox</span><span>1</span></div><div class="row"><span><i class="chk"></i>Mobile</span><span>1</span></div></div>
+<div class="f"><h4>Skins (min)</h4><div class="row"><span>50</span><span class="mono">▬▬▬○────</span></div></div>
+<div class="f"><h4>Price (USD)</h4><div class="row"><span>$0 — $600</span><span class="mono">▬▬▬▬▬○──</span></div></div>
+<div class="f"><h4>Flags</h4><div class="row"><span><i class="chk on"></i>OG / early seasons</span></div><div class="row"><span><i class="chk"></i>Full access</span></div><div class="row"><span><i class="chk"></i>In stock only</span></div></div>
+</aside><main>
+<div class="head"><div><h1>Fortnite accounts</h1><div class="sub">Sorted by price ↑ · rarity bar = common → legendary share of the collection</div></div><div class="mono sub">1–6 of 6</div></div>
+<table><thead><tr><th>Listing</th><th class="num">Skins</th><th class="num">V-Bucks</th><th>Platform</th><th>Collection</th><th>Stock</th><th class="num">Price</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+<div class="trust"><span><b>Replacement warranty</b> on every account</span><span><b>Crypto checkout</b> · address unique per order</span><span><b>Order link</b> = proof of purchase</span></div>
+</main></div><div class="foot">Mockup with sample data · not affiliated with Epic Games</div>
+<script src="data.js"></script><script>
+const C=["#5b636a","#3FB27F","#4A90D9","#B77BE0","#F2A20C"];
+$("#n").textContent=DATA.length;
+$("#rows").innerHTML=[...DATA].sort((a,b)=>a.price-b.price).map(d=>{const sum=d.r.reduce((a,b)=>a+b,0);
+return `<tr><td><div class="ttl">${d.t}</div><div style="margin-top:5px">${d.og?'<span class="tag og">OG</span>':''}<span class="tag">full access</span><span class="tag">7d warranty</span></div></td>
+<td class="num">${d.skins}</td><td class="num">${d.vb}</td><td>${d.plat}</td>
+<td><div class="bar">${d.r.map((v,i)=>`<i style="width:${v/sum*100}%;background:${C[i]}"></i>`).join("")}</div></td>
+<td><span class="st ${d.stock<3?'low':''}">${d.stock} in stock</span></td><td class="num price">${usd(d.price)}</td><td><span class="btn">Buy</span></td></tr>`}).join("");
+</script>
