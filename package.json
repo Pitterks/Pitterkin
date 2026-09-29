@@ -11,7 +11,8 @@
     "db:seed": "tsx src/db/seed.ts",
     "test": "vitest run",
     "watcher": "tsx scripts/watcher.ts",
-    "wallet:new": "tsx scripts/wallet-new.ts"
+    "wallet:new": "tsx scripts/wallet-new.ts",
+    "admin:totp": "tsx scripts/admin-totp.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.3",

@@ -20,6 +20,7 @@ Rules: sweep balances out of gateways frequently, never keep large balances on a
 | Phase | Scope | Time |
 |---|---|---|
 | Done | Prototype: catalog, checkout, reservation, delivery, admin v0, tests | — |
+| Done | Phase 3b: admin 2FA (TOTP, single-use codes) | — |
 | Done | Phase 3a: admin product/game CRUD (schema-driven forms), generic per-game catalog + filters | — |
 | Done | Phase 2.1: own-wallet crypto (xpub per-order addresses, scanner, pay page) | — |
 | Done | Phase 1 (partly): cart, warranty claims + replacement, email outbox | — |

@@ -26,6 +26,7 @@ The mock provider is disabled in production unless `MOCK_PAYMENTS=1`.
 - Admin: dashboard (revenue/margin/stock), orders (+ mark refunded), bulk inventory import
 - Cart (cookie), warranty claims with account replacement (old account retired, never resold), transactional email outbox (Resend when `RESEND_API_KEY` is set, console otherwise)
 - Crypto: per-order USDC/USDT addresses on Polygon from an xpub, chain scanner with confirmations, under/overpay handling — see [docs/CRYPTO.md](docs/CRYPTO.md)
+- Admin: product/game CRUD with schema-driven forms; optional TOTP 2FA (`npm run admin:totp` on your machine, then set `ADMIN_TOTP_SECRET`)
 - Tests: concurrency, webhook idempotency, amount mismatch, expired/late payment paths
 
 See [docs/PLAN.md](docs/PLAN.md) for the roadmap, payments strategy and timeline.
