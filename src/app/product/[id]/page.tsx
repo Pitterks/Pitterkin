@@ -4,6 +4,7 @@ import { db, schema } from "@/db";
 import { money } from "@/lib/format";
 import { providers } from "@/lib/payments";
 import { placeOrder } from "../../checkout/actions";
+import { addToCart } from "../../cart/actions";
 
 export const dynamic = "force-dynamic";
 const { products, games, inventoryItems } = schema;
@@ -57,6 +58,7 @@ export default async function ProductPage({ params, searchParams }: { params: Pr
           I agree to the terms and understand the warranty conditions.
         </label>
         <button className="btn w-full disabled:opacity-40" disabled={!stock}>Buy now</button>
+        <button formAction={addToCart} formNoValidate className="btn-ghost w-full disabled:opacity-40" disabled={!stock}>Add to cart</button>
       </form>
     </div>
   );

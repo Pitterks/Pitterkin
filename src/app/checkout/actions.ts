@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createOrder, OrderError } from "@/lib/orders";
 import { rateLimit } from "@/lib/ratelimit";
+import { readCartIds, writeCartIds } from "@/lib/cart";
 
 const schemaIn = z.object({
   productId: z.string().uuid(),
@@ -27,6 +28,33 @@ export async function placeOrder(form: FormData) {
       email: parsed.data.email, providerId: parsed.data.provider, ip,
       lines: [{ productId: parsed.data.productId, qty: 1 }],
     });
+    target = `${redirectUrl}${redirectUrl.includes("?") ? "&" : "?"}token=${order.accessToken}`;
+  } catch (e) {
+    if (e instanceof OrderError) return back(e.message);
+    throw e;
+  }
+  redirect(target);
+}
+
+const cartSchema = schemaIn.omit({ productId: true });
+
+export async function checkoutCart(form: FormData) {
+  const h = await headers();
+  const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() ?? null;
+  const back = (msg: string) => redirect(`/cart?error=${encodeURIComponent(msg)}`);
+  const parsed = cartSchema.safeParse(Object.fromEntries(form));
+  if (!parsed.success) return back("Please check the form and accept the terms.");
+  if (!rateLimit(`order:${ip ?? parsed.data.email}`, 5, 10 * 60_000)) return back("Too many attempts, try again later.");
+  const ids = await readCartIds();
+  if (!ids.length) return back("Your cart is empty.");
+
+  let target: string;
+  try {
+    const { order, redirectUrl } = await createOrder({
+      email: parsed.data.email, providerId: parsed.data.provider, ip,
+      lines: ids.map((productId) => ({ productId, qty: 1 })),
+    });
+    await writeCartIds([]);
     target = `${redirectUrl}${redirectUrl.includes("?") ? "&" : "?"}token=${order.accessToken}`;
   } catch (e) {
     if (e instanceof OrderError) return back(e.message);

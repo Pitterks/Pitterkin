@@ -39,6 +39,7 @@ export default async function Admin() {
       <div className="flex gap-3">
         <Link href="/admin/orders" className="btn">Orders</Link>
         <Link href="/admin/inventory" className="btn">Inventory</Link>
+        <Link href="/admin/claims" className="btn">Claims</Link>
       </div>
     </div>
   );

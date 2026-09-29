@@ -1,13 +1,15 @@
 import "./globals.css";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { readCartIds } from "@/lib/cart";
 
 export const metadata: Metadata = {
   title: { default: "Pitterkin · Game accounts", template: "%s · Pitterkin" },
   description: "Verified game accounts with warranty and instant delivery.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const cartCount = (await readCartIds()).length;
   return (
     <html lang="en">
       <body className="min-h-screen antialiased">
@@ -17,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <nav className="flex gap-5 text-sm muted">
               <Link href="/">Accounts</Link>
               <Link href="/#warranty">Warranty</Link>
+              <Link href="/cart">Cart{cartCount ? ` (${cartCount})` : ""}</Link>
               <Link href="/admin">Admin</Link>
             </nav>
           </div>

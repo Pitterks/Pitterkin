@@ -24,6 +24,7 @@ The mock provider is disabled in production unless `MOCK_PAYMENTS=1`.
 - `PaymentProvider` interface (`src/lib/payments`) + mock provider; idempotent, amount-verified webhooks
 - Credentials AES-256-GCM encrypted at rest, decrypted only for the paid order's secret link, every view audited
 - Admin: dashboard (revenue/margin/stock), orders (+ mark refunded), bulk inventory import
+- Cart (cookie), warranty claims with account replacement (old account retired, never resold), transactional email outbox (Resend when `RESEND_API_KEY` is set, console otherwise)
 - Tests: concurrency, webhook idempotency, amount mismatch, expired/late payment paths
 
 See [docs/PLAN.md](docs/PLAN.md) for the roadmap, payments strategy and timeline.

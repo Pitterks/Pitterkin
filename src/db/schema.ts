@@ -98,3 +98,28 @@ export const auditLog = pgTable("audit_log", {
   ip: text("ip"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
+
+export const claimStatus = pgEnum("claim_status", ["open", "replaced", "rejected"]);
+
+export const warrantyClaims = pgTable("warranty_claims", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  orderItemId: uuid("order_item_id").notNull().references(() => orderItems.id),
+  reason: text("reason").notNull(),
+  status: claimStatus("status").notNull().default("open"),
+  adminNote: text("admin_note"),
+  oldInventoryItemId: uuid("old_inventory_item_id"),
+  newInventoryItemId: uuid("new_inventory_item_id"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  resolvedAt: timestamp("resolved_at"),
+}, (t) => [index("claims_status_idx").on(t.status)]);
+
+/** Transactional outbox: rows are written inside the business transaction, sent afterwards. */
+export const emailOutbox = pgTable("email_outbox", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  to: text("to").notNull(),
+  subject: text("subject").notNull(),
+  body: text("body").notNull(),
+  sentAt: timestamp("sent_at"),
+  attempts: integer("attempts").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (t) => [index("outbox_unsent_idx").on(t.sentAt)]);

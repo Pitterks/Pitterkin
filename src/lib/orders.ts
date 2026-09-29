@@ -4,6 +4,7 @@ import { db, schema, type Tx } from "@/db";
 import { decrypt, safeEqual } from "./crypto";
 import { getProvider } from "./payments";
 import type { PaymentEvent } from "./payments/types";
+import { queueEmail, flushOutbox, appUrl } from "./email";
 
 const { inventoryItems, orders, orderItems, payments, products, auditLog } = schema;
 
@@ -119,6 +120,12 @@ export type PaymentOutcome = "delivered" | "duplicate" | "unknown_payment" | "fa
  * (or concurrently) delivers exactly once.
  */
 export async function handlePaymentEvent(providerId: string, ev: PaymentEvent): Promise<PaymentOutcome> {
+  const outcome = await processPaymentEvent(providerId, ev);
+  if (outcome === "delivered") void flushOutbox().catch(() => {});
+  return outcome;
+}
+
+async function processPaymentEvent(providerId: string, ev: PaymentEvent): Promise<PaymentOutcome> {
   return db.transaction(async (tx) => {
     const rows = await tx.execute<{ id: string; order_id: string; status: string; amount_cents: number }>(dsql`
       SELECT id, order_id, status, amount_cents FROM payments
@@ -167,7 +174,13 @@ export async function handlePaymentEvent(providerId: string, ev: PaymentEvent): 
       .update(inventoryItems)
       .set({ status: "sold", reservedUntil: null, reservedByOrderId: pay.order_id })
       .where(inArray(inventoryItems.id, ids));
-    await tx.update(orders).set({ status: "delivered", paidAt: new Date(), deliveredAt: new Date() }).where(eq(orders.id, pay.order_id));
+    const order = (await tx.update(orders).set({ status: "delivered", paidAt: new Date(), deliveredAt: new Date() }).where(eq(orders.id, pay.order_id)).returning())[0];
+    // never put credentials in email: only the secret order link
+    await queueEmail(tx, {
+      to: order.email,
+      subject: `Your order ${order.id.slice(0, 8)} is ready`,
+      body: `Thanks for your purchase!\n\nYour account details: ${appUrl()}/order/${order.id}?token=${order.accessToken}\n\nKeep this link private. It is also your warranty proof.`,
+    });
     return "delivered";
   });
 }
@@ -179,6 +192,7 @@ export async function getOrderForCustomer(orderId: string, token: string, ip?: s
 
   const lines = await db
     .select({
+      itemId: orderItems.id,
       title: products.title,
       warrantyDays: products.warrantyDays,
       credentialsEnc: inventoryItems.credentialsEnc,
@@ -193,8 +207,9 @@ export async function getOrderForCustomer(orderId: string, token: string, ip?: s
     await db.insert(auditLog).values({ actor: `customer:${order.email}`, action: "delivery_viewed", target: order.id, ip: ip ?? null });
   }
   return {
-    order: { id: order.id, status: order.status, email: order.email, totalCents: order.totalCents, currency: order.currency, createdAt: order.createdAt },
+    order: { id: order.id, deliveredAt: order.deliveredAt, status: order.status, email: order.email, totalCents: order.totalCents, currency: order.currency, createdAt: order.createdAt },
     lines: lines.map((l) => ({
+      itemId: l.itemId,
       title: l.title,
       warrantyDays: l.warrantyDays,
       credentials: delivered ? decrypt(l.credentialsEnc) : null,

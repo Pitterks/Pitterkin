@@ -20,7 +20,8 @@ Rules: sweep balances out of gateways frequently, never keep large balances on a
 | Phase | Scope | Time |
 |---|---|---|
 | Done | Prototype: catalog, checkout, reservation, delivery, admin v0, tests | — |
-| 1 | Cart, user accounts (magic link), email delivery, warranty claims + replacement flow | 2 wks |
+| Done | Phase 1 (partly): cart, warranty claims + replacement, email outbox | — |
+| 1 | Remaining: user accounts (magic link), real email provider key (Resend) | 0.5 wk |
 | 2 | Crypto providers (own wallet watcher + gateway), order emails, tickets | 2 wks |
 | 3 | Admin v1: product CRUD, RBAC + 2FA, audit UI, coupons, analytics | 2 wks |
 | 4 | Design system/brand, SEO, reviews, image storage, Turnstile | 2 wks |
