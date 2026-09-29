@@ -123,3 +123,31 @@ export const emailOutbox = pgTable("email_outbox", {
   attempts: integer("attempts").notNull().default(0),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 }, (t) => [index("outbox_unsent_idx").on(t.sentAt)]);
+
+/** One deposit address per payment, derived from the store's xpub (index = identity). */
+export const cryptoDeposits = pgTable("crypto_deposits", {
+  idx: integer("idx").generatedAlwaysAsIdentity({ startWith: 1 }),
+  externalId: text("external_id").primaryKey(),
+  address: text("address").notNull().unique(),
+  chainId: integer("chain_id").notNull(),
+  expectedCents: integer("expected_cents").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const cryptoTransfers = pgTable("crypto_transfers", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  chainId: integer("chain_id").notNull(),
+  txHash: text("tx_hash").notNull(),
+  logIndex: integer("log_index").notNull(),
+  externalId: text("external_id").notNull().references(() => cryptoDeposits.externalId),
+  token: text("token").notNull(),
+  amountRaw: text("amount_raw").notNull(),
+  amountCents: integer("amount_cents").notNull(),
+  blockNumber: integer("block_number").notNull(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+}, (t) => [uniqueIndex("crypto_transfer_uq").on(t.chainId, t.txHash, t.logIndex), index("crypto_transfer_ext_idx").on(t.externalId)]);
+
+export const chainCursors = pgTable("chain_cursors", {
+  chainId: integer("chain_id").primaryKey(),
+  lastBlock: integer("last_block").notNull(),
+});

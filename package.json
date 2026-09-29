@@ -9,12 +9,16 @@
     "typecheck": "tsc --noEmit",
     "db:push": "drizzle-kit push",
     "db:seed": "tsx src/db/seed.ts",
-    "test": "vitest run"
+    "test": "vitest run",
+    "watcher": "tsx scripts/watcher.ts",
+    "wallet:new": "tsx scripts/wallet-new.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.3",
+    "ethers": "^6.17.0",
     "next": "^15.5.26",
     "postgres": "^3.4.9",
+    "qrcode": "^1.5.4",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "zod": "^4.6.5"
@@ -22,6 +26,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^26.6.3",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "dotenv": "^18.0.4",

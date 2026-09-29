@@ -20,6 +20,7 @@ Rules: sweep balances out of gateways frequently, never keep large balances on a
 | Phase | Scope | Time |
 |---|---|---|
 | Done | Prototype: catalog, checkout, reservation, delivery, admin v0, tests | — |
+| Done | Phase 2.1: own-wallet crypto (xpub per-order addresses, scanner, pay page) | — |
 | Done | Phase 1 (partly): cart, warranty claims + replacement, email outbox | — |
 | 1 | Remaining: user accounts (magic link), real email provider key (Resend) | 0.5 wk |
 | 2 | Crypto providers (own wallet watcher + gateway), order emails, tickets | 2 wks |
